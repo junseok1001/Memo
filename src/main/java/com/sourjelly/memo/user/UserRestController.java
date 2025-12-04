@@ -1,0 +1,46 @@
+package com.sourjelly.memo.user;
+
+
+import com.sourjelly.memo.user.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+public class UserRestController {
+
+    private final UserService userService;
+
+//    @Autowired
+    public UserRestController(UserService userService){
+        this.userService = userService;
+    }
+
+    //회원가입 api
+    @PostMapping("/user/join-process")
+    public Map<String, String> join(
+            @RequestParam String loginId
+            ,@RequestParam String password
+            ,@RequestParam String name
+            ,@RequestParam String email){
+
+        Map<String, String> resultMap = new HashMap<>();
+
+        if(userService.createUser(loginId, password, name, email)){
+            resultMap.put("result", "success");
+
+        }else{
+            resultMap.put("result", "fail");
+
+        }
+
+        return resultMap;
+
+    }
+
+}
