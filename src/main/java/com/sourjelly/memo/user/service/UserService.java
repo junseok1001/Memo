@@ -29,11 +29,7 @@ public class UserService {
 
         int count = userRepository.insertUser(loginId, encodedPassword, name, email);
 
-        if(count == 1){
-            return true;
-        }else {
-            return false;
-        }
+        return count== 1;
 
     }
 

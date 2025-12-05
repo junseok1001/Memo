@@ -37,6 +37,7 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
 
 
