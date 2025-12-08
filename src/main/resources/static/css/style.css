@@ -16,6 +16,11 @@ header{
     border-radius:30px;
 }
 
+.contents > .contents-box{
+    width:800px;
+    height:500px;
+}
+
 
 footer{
     height:80px;
