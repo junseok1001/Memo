@@ -37,7 +37,6 @@ public class MemoController {
 
     @GetMapping("/write")
     public String writeForm(){
-
         return "memo/form";
     }
 
