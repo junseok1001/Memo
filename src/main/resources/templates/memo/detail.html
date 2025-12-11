@@ -10,6 +10,9 @@
 
         <input type="text" id="titleInput" class="form-control mt-4" th:value="${memo.title}" value="샘플 메모 제목입니다." placeholder="제목을 입력하세요">
         <textarea id="contentsInput" class="form-control mt-3" rows="12" th:text="${memo.contents}" placeholder="내용을 입력하세요">샘플 메모내용입니다</textarea>
+
+        <img th:src="${memo.imagePath}">
+
         <div class="d-flex justify-content-between mt-3">
             <button type="button" class="btn btn-danger">삭제하기</button>
             <div>

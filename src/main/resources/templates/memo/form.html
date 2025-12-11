@@ -24,6 +24,8 @@
         let title = $("#titleInput").val();
         let contents = $("#contentsInput").val();
 
+        let file = $("#fileInput")[0].files[0];
+
         if(title==""){
             alert("제목을 입력하세요");
             return;
@@ -34,10 +36,18 @@
             return;
         }
 
+        let formData = new FormData();
+        formData.append("title", title);
+        formData.append("contents", contents);
+        formData.append("imageFile", file)
+
+        // 요청에 의한 구성요소들
         $.ajax({
             type:"post"
             , url:"/memo/write-process"
-            , data:{"title":title, "contents":contents}
+            , data: formData
+            , processData: false
+            , contentType: false
             , success:function(response){
                 if(response.result == "success"){
                     location.href="/memo/list";

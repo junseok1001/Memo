@@ -1,7 +1,6 @@
 package com.sourjelly.memo.memo.repository;
 
 import com.sourjelly.memo.memo.domain.Memo;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
