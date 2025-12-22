@@ -5,7 +5,7 @@
 
 
 <section class="contents d-flex justify-content-center" layout:fragment="contents">
-    <div class="contents-box my-5">
+    <div class="contents-box my-5" th:data-id="${memo.id}" id="memoContents">
         <h2 class="text-center">메모 상세</h2>
 
         <input type="text" id="titleInput" class="form-control mt-4" th:value="${memo.title}" value="샘플 메모 제목입니다." placeholder="제목을 입력하세요">
@@ -14,7 +14,7 @@
         <img th:src="${memo.imagePath}">
 
         <div class="d-flex justify-content-between mt-3">
-            <button type="button" class="btn btn-danger">삭제하기</button>
+            <button id="removeBtn" type="button" class="btn btn-danger">삭제하기</button>
             <div>
                 <a href="/memo/list"  class="btn btn-secondary">목록으로</a>
                 <button type="button" id="saveBtn" class="btn btn-secondary">수정</button>
@@ -25,5 +25,53 @@
 </section>
 
 
+<script layout:fragment="script">
+    $("#removeBtn").on("click", function(){
 
+       let id = $("#memoContents").data("id");
+
+       $.ajax({
+           type:"delete"
+           , url:"/memo/remove"
+           , data:{"id": id}
+           , success: function(response){
+               if(response.result === "success"){
+                   location.href = "/memo/list";
+               }else{
+                   alert("삭제하기 실패");
+               }
+
+           }
+           ,error: function(){
+               alert("삭제 에러");
+           }
+       });
+
+    });
+
+
+    $("#saveBtn").on("click", function(){
+        let title = $("#titleInput").val();
+        let contents = $("#contentsInput").val();
+        let id = $("#memoContents").data("id");
+
+        $.ajax({
+            type:"put"
+            , url: "/memo/modify"
+            , data: {"id":id, "title":title, "contents":contents}
+            , success: function(response){
+                if(response.result === "success"){
+                    location.reload();
+                }else {
+                    alert("수정 실패!!");
+                }
+            }
+            , error: function(){
+                alert("수정 에러");
+            }
+        });
+
+    });
+
+</script>
 </html>

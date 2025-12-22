@@ -36,4 +36,36 @@ public class MemoRestController {
         }
         return resultMap;
     }
+
+    @PutMapping("/modify")
+    public Map<String, String> modifyMemo(
+            @RequestParam long id
+            ,@RequestParam String title
+            ,@RequestParam String contents){
+
+        Map<String, String> resultMap = new HashMap<>();
+        if(memoService.updateMemo(id, title, contents)){
+            resultMap.put("result", "success");
+        }else{
+            resultMap.put("result", "fail");
+        }
+
+        return resultMap;
+    }
+
+    @DeleteMapping("/remove")
+    public Map<String, String> removeMemo(@RequestParam long id){
+
+
+        Map<String, String> resultMap = new HashMap<>();
+        if(memoService.deleteMemo(id)){
+            resultMap.put("result", "success");
+        }else{
+            resultMap.put("result", "fail");
+        }
+
+        return resultMap;
+    }
+
+
 }

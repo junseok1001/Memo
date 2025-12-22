@@ -13,8 +13,8 @@ public class FileManger {
 
     // 멤버 변수 형태로 나는 사용할거고 변경하면 안돼닌깐 final
     // final 은 상수라고 말한다.
-    public final static String FILE_UPLOAD_PATH= "D:\\jun_project\\springProject\\upload\\memo";
-//    public final static String FILE_UPLOAD_PATH="D:\\webInventer\\springProject\\upload\\memo";
+//    public final static String FILE_UPLOAD_PATH= "D:\\jun_project\\springProject\\upload\\memo";
+    public final static String FILE_UPLOAD_PATH="D:\\webInventer\\springProject\\upload\\memo";
 
     // 파일을 전달받아, 정해진 경로에 저장하고,
     // 해당 파일을 클라이언트가 접근할 수 있는 url 경로 리턴
@@ -65,8 +65,31 @@ public class FileManger {
         // url path : /images/3_123456789/test.png
 
         return "/images"+ directoryName + "/" + file.getOriginalFilename();
+    }
+
+    // 삭제 기능
+    public static boolean removeFile(String imagePath){
+
+        if(imagePath == null){
+            return false;
+        }
+
+        String fullFilePath = FILE_UPLOAD_PATH + imagePath.replace("images", "");
 
 
+
+        Path path = Paths.get(fullFilePath);
+        Path directoryPath = path.getParent();
+
+
+
+        try {
+            Files.delete(path);
+            Files.delete(directoryPath);
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
 }

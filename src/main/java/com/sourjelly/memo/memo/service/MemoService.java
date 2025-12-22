@@ -54,7 +54,56 @@ public class MemoService {
         Optional<Memo> optionalMemo = memoRepository.findById(id);
 
         return optionalMemo.get();
+    }
 
+    public boolean updateMemo(long id, String title, String contents){
+        // 수정 대상 행 조회
+        // 수정 내용 적용 된 객체 만들기
+        // 수정된 객체 저장
+
+        Optional<Memo> optionalMemo = memoRepository.findById(id);
+
+        if(optionalMemo.isPresent()){
+            Memo memo = optionalMemo.get();
+
+            memo = memo.toBuilder()
+                        .title(title)
+                        .contents(contents)
+                        .build();
+            try {
+                memoRepository.save(memo);
+            }catch(DataAccessException e){
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean deleteMemo(long id){
+        // 삭제할 데이터 조회
+        // 삭제한다.
+        Optional<Memo> optionalMemo = memoRepository.findById(id);
+
+        if(optionalMemo.isPresent()){
+            Memo memo = optionalMemo.get();
+
+            FileManger.removeFile(memo.getImagePath());
+
+            try{
+                memoRepository.delete(memo);
+            }catch(DataAccessException e){
+                return false;
+            }
+
+        }else{
+            return false;
+        }
+
+        return true;
     }
 
 }
