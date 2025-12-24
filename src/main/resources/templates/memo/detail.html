@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{/layouts/default}">
+
+
+<section class="contents d-flex justify-content-center" layout:fragment="contents">
+    <div class="contents-box my-5" th:data-id="${memo.id}" id="memoContents">
+        <h2 class="text-center">메모 상세</h2>
+
+        <input type="text" id="titleInput" class="form-control mt-4" th:value="${memo.title}" value="샘플 메모 제목입니다." placeholder="제목을 입력하세요">
+        <textarea id="contentsInput" class="form-control mt-3" rows="12" th:text="${memo.contents}" placeholder="내용을 입력하세요">샘플 메모내용입니다</textarea>
+
+        <img th:src="${memo.imagePath}">
+
+        <div class="d-flex justify-content-between mt-3">
+            <button id="removeBtn" type="button" class="btn btn-danger">삭제하기</button>
+            <div>
+                <a href="/memo/list"  class="btn btn-secondary">목록으로</a>
+                <button type="button" id="saveBtn" class="btn btn-secondary">수정</button>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+<script layout:fragment="script">
+    $("#removeBtn").on("click", function(){
+
+       let id = $("#memoContents").data("id");
+
+       $.ajax({
+           type:"delete"
+           , url:"/memo/remove"
+           , data:{"id": id}
+           , success: function(response){
+               if(response.result === "success"){
+                   location.href = "/memo/list";
+               }else{
+                   alert("삭제하기 실패");
+               }
+
+           }
+           ,error: function(){
+               alert("삭제 에러");
+           }
+       });
+
+    });
+
+
+    $("#saveBtn").on("click", function(){
+        let title = $("#titleInput").val();
+        let contents = $("#contentsInput").val();
+        let id = $("#memoContents").data("id");
+
+        $.ajax({
+            type:"put"
+            , url: "/memo/modify"
+            , data: {"id":id, "title":title, "contents":contents}
+            , success: function(response){
+                if(response.result === "success"){
+                    location.reload();
+                }else {
+                    alert("수정 실패!!");
+                }
+            }
+            , error: function(){
+                alert("수정 에러");
+            }
+        });
+
+    });
+
+</script>
+</html>

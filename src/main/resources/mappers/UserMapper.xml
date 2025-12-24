@@ -27,7 +27,8 @@
     <select id="selectUser" parameterType="map"
             resultType="com.sourjelly.memo.user.domain.User">
         SELECT
-           `login_id`
+            `id`
+           , `login_id`
             , `password`
             , `name`
             , `email`
